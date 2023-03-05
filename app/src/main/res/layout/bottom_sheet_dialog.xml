@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/br_corner_radius20_top"
+    android:backgroundTint="@color/white"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu_sheet"/>
+    <LinearLayout
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/black"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:drawableStart="@drawable/ic_darkmode"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="DarkMode"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+                app:thumbIcon="@drawable/ic_darkmode"
+                app:thumbIconTint="@color/backgroundDark"
+                app:thumbTint="@color/white"
+                android:id="@+id/swDarkMode"
+                style="@style/Widget.App.Switch"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+    <TextView
+        android:textColor="@color/black"
+        android:drawableTint="@color/black"
+        android:id="@+id/tvLogOut"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="50dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_logout"
+        android:padding="10dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="Logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

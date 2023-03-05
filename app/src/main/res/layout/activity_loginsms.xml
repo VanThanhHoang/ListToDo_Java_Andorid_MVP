@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/br_home_atv"
+    tools:context="View.Activities.HomeActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/smallSpace"
+        android:layout_marginTop="@dimen/smallSpace"
+        android:layout_marginEnd="@dimen/smallSpace"
+        android:layout_marginBottom="@dimen/smallSpace"
+        android:background="@drawable/custom_shape_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito_black"
+            android:gravity="center"
+            android:text="Đăng nhập bằng Số điện thoại"
+            android:textSize="@dimen/mediumTextSize"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+        <FrameLayout
+            android:id="@+id/layoutChangeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tvNetWorkState"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="Dữ liệu sẽ được đồng bộ khi có internet"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+</RelativeLayout>

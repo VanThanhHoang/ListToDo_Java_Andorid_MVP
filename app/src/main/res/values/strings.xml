@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ListToDo_Ps25812</string>
+    <!--Login Atv-->
+    <string name="login">Đăng nhập</string>
+    <string name="loginSms">Đăng nhập bằng số điện thoại</string>
+    <string name="account">Tài khoản</string>
+    <string name="password">Mật khẩu</string>
+    <string name="incorrect_password">Mật khẩu không đúng</string>
+    <!--Task Dialog-->
+    <string name="task">Task</string>
+</resources>

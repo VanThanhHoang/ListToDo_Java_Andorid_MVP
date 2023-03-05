@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/br_corner_radius20"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/br_corner_radius20_top" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTaskName"
+        android:layout_margin="@dimen/smallerSpace"
+        android:layout_gravity="center"
+        style="@style/textInputLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_acc">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:gravity="center"
+            style="@style/ediTextLogIn"
+            android:textColorHint="@color/backgroundDark"
+            android:textColor="@color/backgroundDark"
+            android:id="@+id/edTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text|textNoSuggestions" />
+    </com.google.android.material.textfield.TextInputLayout>
+   <LinearLayout
+       android:orientation="horizontal"
+       android:gravity="right"
+       android:layout_gravity="center"
+       android:layout_width="300dp"
+       android:layout_height="wrap_content"
+       tools:ignore="RtlHardcoded">
+       <com.google.android.material.button.MaterialButton
+           android:layout_margin="@dimen/smallerSpace"
+           android:id="@+id/btnAdd"
+           android:layout_width="wrap_content"
+           app:cornerRadius="10dp"
+           android:textColor="@color/white"
+           android:backgroundTint="@color/backgroundDark"
+           android:layout_height="wrap_content"/>
+       <com.google.android.material.button.MaterialButton
+           android:layout_margin="@dimen/smallerSpace"
+           android:id="@+id/btnCancel"
+           style="@style/Widget.Material3.Button.OutlinedButton"
+           android:layout_width="wrap_content"
+           app:cornerRadius="10dp"
+           android:textColor="@color/backgroundDark"
+           android:layout_height="wrap_content"/>
+   </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/br_corner_radius20_bot" />
+</LinearLayout>

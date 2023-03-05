@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundDark"
+    android:orientation="vertical"
+    android:padding="@dimen/largeSpace"
+    android:weightSum="10"
+    tools:context=".View.Activities.LoginActivity">
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/supper_largeTextSize"
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_margin="@dimen/smallSpace"
+        android:id="@+id/anmListCheck"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:foregroundGravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/anm_checklist"
+        app:lottie_speed="0.3" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/account"
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_acc">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/ediTextLogIn"
+            android:id="@+id/edAccount"
+            android:drawablePadding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:inputType="text|textNoSuggestions" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPassword"
+        app:errorEnabled="true"
+        style="@style/textInputLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="@string/password"
+        app:endIconMode="password_toggle"
+        app:startIconDrawable="@drawable/ic_pass">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/ediTextLogIn"
+            android:id="@+id/edPassWord"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:inputType="textPassword|textNoSuggestions" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin"
+        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+        android:layout_width="280dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/black"
+        android:baselineAligned="false"
+        android:elevation="2dp"
+        android:fontFamily="@font/nunito_black"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/largerTextSize"
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
+    <TextView
+        android:id="@+id/tvLoginSms"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="@dimen/mediumTextSize"
+        android:text="@string/loginSms"/>
+</LinearLayout>

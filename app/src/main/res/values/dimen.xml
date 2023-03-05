@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Text size-->
+    <dimen name="smallTextSize">14sp</dimen>
+    <dimen name="mediumTextSize">18sp</dimen>
+    <dimen name="largeTextSize">24sp</dimen>
+    <dimen name="largerTextSize">32sp</dimen>
+    <dimen name="supper_largeTextSize">40sp</dimen>
+    <!--Padding-->
+    <dimen name="smallerSpace">8dp</dimen>
+    <dimen name="smallSpace">12dp</dimen>
+    <dimen name="mediumSpace">20dp</dimen>
+    <dimen name="largeSpace">25dp</dimen>
+    <dimen name="supperLargeSpace">40dp</dimen>
+</resources>

@@ -1,0 +1,50 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.ListToDo_Ps25812" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/backgroundDark</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/nunito_semi_bold</item>
+        <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
+    </style>
+
+    <style name="textInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="hintTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="strokeWidth">3dp</item>
+        <item name="android:layout_marginTop">@dimen/smallSpace</item>
+        <item name="android:layout_marginBottom">@dimen/smallSpace</item>
+        <item name="hintTextAppearance">@style/myHintTextAppearance</item>
+        <item name="boxStrokeColor">@color/dark_yellow</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="startIconTint">@color/white</item>
+        <item name="endIconTint">@color/white</item>
+    </style>
+
+    <style name="ediTextLogIn">
+        <item name="android:textSize">@dimen/mediumTextSize</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="myHintTextAppearance" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/smallTextSize</item>
+    </style>
+    //switch
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <item name="colorSurfaceVariant">@color/white</item>
+        <item name="colorPrimary">@color/backgroundDark</item>
+    </style>
+</resources>
