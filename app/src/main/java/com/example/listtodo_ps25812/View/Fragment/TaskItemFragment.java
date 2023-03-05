@@ -22,7 +22,7 @@ import com.example.listtodo_ps25812.Presenter.Listener.TaskItemChangeListener;
 import com.example.listtodo_ps25812.Presenter.TaskItemFragmentPresenter;
 import com.example.listtodo_ps25812.R;
 import com.example.listtodo_ps25812.Untilities.ItemTouchHelperCallback;
-import com.example.listtodo_ps25812.Untilities.NetworkChecker;
+import com.example.listtodo_ps25812.View.Dialog.ProcessDialog;
 import com.example.listtodo_ps25812.View.Dialog.TaskItemDialog.AddTaskItemDialog;
 import com.example.listtodo_ps25812.View.Dialog.TaskItemDialog.UpdateTaskItemDialog;
 import com.example.listtodo_ps25812.databinding.FragmentTaskBinding;
@@ -35,25 +35,24 @@ public class TaskItemFragment extends Fragment implements TaskItemChangeListener
     private AddTaskItemDialog addItemTaskDialog;
     private TaskItemFragmentPresenter taskItemFragmentPresenter;
     private TaskItemAdapter taskItemAdapter;
-    private long taskId;
-
+    private String taskKey;
+    ProcessDialog processDialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutBinding = FragmentTaskBinding.inflate(inflater, container, false);
         if (this.getContext() != null) {
-
-            taskItemFragmentPresenter = new TaskItemFragmentPresenter(this,
-                    new NetworkChecker(this.getContext()),
-                    taskId);
-            addItemTaskDialog = new AddTaskItemDialog(this.getContext(), taskItemFragmentPresenter, taskId);
+            taskItemFragmentPresenter = new TaskItemFragmentPresenter(this, taskKey);
+            addItemTaskDialog = new AddTaskItemDialog(this.getContext(), taskItemFragmentPresenter, taskKey);
         }
+        processDialog = new ProcessDialog(this.getContext());
         return layoutBinding.getRoot();
     }
 
     void initRv(List<TaskItem> taskItemList) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        taskItemAdapter = new TaskItemAdapter(taskItemList, (OpenItemsFragmentListener) getContext(),
+        taskItemAdapter = new TaskItemAdapter(taskItemList,
+                (OpenItemsFragmentListener) getContext(),
                 (taskItem) -> taskItemFragmentPresenter.changeStatusTaskItem(taskItem));
         layoutBinding.rvTask.setLayoutManager(layoutManager);
         layoutBinding.rvTask.setAdapter(taskItemAdapter);
@@ -94,7 +93,7 @@ public class TaskItemFragment extends Fragment implements TaskItemChangeListener
     @Override
     public void onAttach(@NonNull Context context) {
         if (getArguments() != null) {
-            taskId = getArguments().getLong("taskId", 0);
+            taskKey = getArguments().getString("taskKey");
         }
         super.onAttach(context);
     }
@@ -102,6 +101,7 @@ public class TaskItemFragment extends Fragment implements TaskItemChangeListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         layoutBinding.fabAddTask.setOnClickListener(v -> addItemTaskDialog.show());
+        processDialog.show();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -110,6 +110,7 @@ public class TaskItemFragment extends Fragment implements TaskItemChangeListener
         ChangeTopTitleListener changeTopTitleListener = (ChangeTopTitleListener) getContext();
         assert changeTopTitleListener != null;
         changeTopTitleListener.changeTopTitle(ChangeTopTitleListener.TASK_ITEM_TITLE, R.drawable.ic_back);
+
         super.onStart();
     }
 
@@ -130,6 +131,7 @@ public class TaskItemFragment extends Fragment implements TaskItemChangeListener
 
     @Override
     public void onGetListTask(List<TaskItem> taskItemList) {
+        processDialog.hide();
         initRv(taskItemList);
     }
 

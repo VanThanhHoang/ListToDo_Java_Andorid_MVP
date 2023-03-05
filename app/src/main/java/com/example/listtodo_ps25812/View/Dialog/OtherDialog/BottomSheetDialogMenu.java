@@ -1,4 +1,4 @@
-package com.example.listtodo_ps25812.View.Dialog;
+package com.example.listtodo_ps25812.View.Dialog.OtherDialog;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,6 +30,9 @@ public class BottomSheetDialogMenu extends BottomSheetDialog {
 
             }
         });
-        bottomSheetDialogBinding.tvLogOut.setOnClickListener(v -> logoutListener.logOut());
+        bottomSheetDialogBinding.tvLogOut.setOnClickListener(v -> {
+            this.dismiss();
+            logoutListener.logOut();
+        });
     }
 }

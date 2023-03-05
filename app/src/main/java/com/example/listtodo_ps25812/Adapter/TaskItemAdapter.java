@@ -1,5 +1,4 @@
 package com.example.listtodo_ps25812.Adapter;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ public class TaskItemAdapter extends RecyclerView.Adapter<TaskItemAdapter.viewHo
     @Override
     public void onBindViewHolder(@NonNull viewHolderTaskItem holder, int position) {
         TaskItem taskItem = taskList.get(holder.getLayoutPosition());
+
         holder.tvTaskName.setText(taskItem.getName());
         if (taskItem.getStatus()) {
             holder.chkIsDone.setChecked(true);

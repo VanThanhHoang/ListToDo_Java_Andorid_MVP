@@ -1,12 +1,11 @@
 package com.example.listtodo_ps25812.Presenter;
-
 import static com.example.listtodo_ps25812.Untilities.Constant.PATH_TASK_ON_FIRE_BASE;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.example.listtodo_ps25812.Model.Task;
 import com.example.listtodo_ps25812.Presenter.Listener.TaskChangeListener;
 import com.example.listtodo_ps25812.Presenter.Listener.ValidModelListener;
-import com.example.listtodo_ps25812.Untilities.NetworkChecker;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,19 +26,16 @@ public class TaskFragmentPresenter {
     int positionTaskRemove;
     TaskChangeListener taskChangeListener;
     ValidModelListener validModelListener;
-    NetworkChecker networkChecker;
     DatabaseReference tasksRef;
+    boolean isFirstLoad = true;
 
-    public TaskFragmentPresenter(TaskChangeListener taskChangeListener, NetworkChecker networkChecker) {
+    public TaskFragmentPresenter(TaskChangeListener taskChangeListener) {
         this.taskChangeListener = taskChangeListener;
-        this.networkChecker = networkChecker;
         taskList = new ArrayList<>();
         tasksRef = FirebaseDatabase.getInstance().getReference(PATH_TASK_ON_FIRE_BASE);
-        if (networkChecker.isNetworkConnected()) {
-            getListFromFireBase();
-            addDataRefChildrenEvent();
-        }
+        addDataRefChildrenEvent();
     }
+
     public void setValidModelListener(ValidModelListener validModelListener) {
         this.validModelListener = validModelListener;
     }
@@ -47,30 +44,37 @@ public class TaskFragmentPresenter {
         return taskList;
     }
 
-    void getListFromFireBase() {
+
+    void addDataRefChildrenEvent() {
         tasksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Task task = dataSnapshot.getValue(Task.class);
-                    taskList.add(0,task);
+                if(snapshot.getChildrenCount()==0){
+                    taskChangeListener.onGetListTask(taskList);
                 }
-                taskChangeListener.onGetListTask(taskList);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-    }
-
-    void addDataRefChildrenEvent() {
         tasksRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                /*Task task = snapshot.getValue(Task.class);
+                Task task = snapshot.getValue(Task.class);
+                if (task == null) {
+                    return;
+                }
+                task.setKey(snapshot.getKey());
                 taskList.add(0, task);
-                taskChangeListener.onAddTask(0);*/
+                if (!isFirstLoad) {
+                    taskChangeListener.onAddTask(0);
+                } else {
+                    isFirstLoad = false;
+                    Collections.reverse(taskList);
+                    taskChangeListener.onGetListTask(taskList);
+                }
             }
 
             @Override
@@ -79,6 +83,8 @@ public class TaskFragmentPresenter {
                 if (task == null || taskList.isEmpty()) {
                     return;
                 }
+                task.setKey(snapshot.getKey());
+                //search
                 for (Task currentTask : taskList) {
                     if (currentTask.equals(task)) {
                         int index = taskList.indexOf(currentTask);
@@ -119,8 +125,6 @@ public class TaskFragmentPresenter {
 
     public void addTask(Task task) {
         if (task.validateTaskName(task.getName())) {
-            taskList.add(0, task);
-            taskChangeListener.onAddTask(0);
             tasksRef.push().setValue(task);
             validModelListener.onValidModel();
             return;
@@ -131,7 +135,7 @@ public class TaskFragmentPresenter {
     public void updateTask(Task task, int position) {
         if (task.validateTaskName(task.getName())) {
             validModelListener.onValidModel();
-            tasksRef.push().updateChildren(task.toMap());
+            tasksRef.child(task.getKey()).updateChildren(task.toMap());
         } else {
             validModelListener.onInValidModel();
             taskChangeListener.onUpdateTask(position);

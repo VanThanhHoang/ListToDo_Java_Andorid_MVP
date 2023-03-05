@@ -17,11 +17,11 @@ import java.util.Objects;
 public class AddTaskItemDialog extends Dialog implements ValidModelListener {
     TaskdialogBinding taskdialogBinding;
     TaskItemFragmentPresenter taskItemFragmentPresenter;
-    long taskId;
+    String taskKey;
 
-    public AddTaskItemDialog(@NonNull Context context, TaskItemFragmentPresenter taskItemFragmentPresenter, long taskId) {
+    public AddTaskItemDialog(@NonNull Context context, TaskItemFragmentPresenter taskItemFragmentPresenter, String taskKey) {
         super(context);
-        this.taskId = taskId;
+        this.taskKey = taskKey;
         this.taskItemFragmentPresenter = taskItemFragmentPresenter;
     }
 
@@ -49,7 +49,7 @@ public class AddTaskItemDialog extends Dialog implements ValidModelListener {
 
     void callPresenterAddTask() {
         String taskItemName = Objects.requireNonNull(taskdialogBinding.edTaskName.getText()).toString();
-        taskItemFragmentPresenter.addTaskItem(new TaskItem(taskItemName, TaskItem.DEFAULT_STATUS, taskId));
+        taskItemFragmentPresenter.addTaskItem(new TaskItem(taskItemName, TaskItem.DEFAULT_STATUS, taskKey));
     }
 
     @Override

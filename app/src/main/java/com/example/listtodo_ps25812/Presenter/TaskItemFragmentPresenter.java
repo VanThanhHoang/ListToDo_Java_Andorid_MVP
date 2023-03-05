@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import com.example.listtodo_ps25812.Model.TaskItem;
 import com.example.listtodo_ps25812.Presenter.Listener.TaskItemChangeListener;
 import com.example.listtodo_ps25812.Presenter.Listener.ValidModelListener;
-import com.example.listtodo_ps25812.Untilities.NetworkChecker;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,28 +29,54 @@ public class TaskItemFragmentPresenter {
     List<TaskItem> taskItemList;
     Queue<TaskItem> queueRemoveTaskItem;
     DatabaseReference taskItemRef;
-    NetworkChecker networkChecker;
     int positionRemoved;
-    long taskId;
+    String taskKey;
+    Boolean isFirstLoad = true;
 
-    public TaskItemFragmentPresenter(TaskItemChangeListener taskItemChangeListener, NetworkChecker networkChecker, long taskId) {
+    public TaskItemFragmentPresenter(TaskItemChangeListener taskItemChangeListener, String taskKey) {
         this.taskItemChangeListener = taskItemChangeListener;
         this.queueRemoveTaskItem = new LinkedList<>();
-        this.networkChecker = networkChecker;
-        this.taskId = taskId;
+        this.taskKey = taskKey;
         taskItemList = new ArrayList<>();
         taskItemRef = FirebaseDatabase.getInstance().getReference(TASK_ITEM_PATH);
-        if (networkChecker.isNetworkConnected()) {
-            addDataRefChildrenEvent();
-        }
-
+        addDataRefChildrenEvent();
     }
 
     private void addDataRefChildrenEvent() {
+        taskItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount() == 0) {
+                    taskItemChangeListener.onGetListTask(taskItemList);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         taskItemRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                TaskItem taskItem = snapshot.getValue(TaskItem.class);
+                if (taskItem == null || taskItem.getTaskKey() == null) {
+                    taskItemChangeListener.onGetListTask(taskItemList);
+                    return;
+                }
+                if( !taskItem.getTaskKey().equals(taskKey)){
+                    taskItemChangeListener.onGetListTask(taskItemList);
+                    return;
+                }
+                taskItem.setKey(snapshot.getKey());
+                taskItemList.add(taskItem);
+                if (!isFirstLoad) {
+                    taskItemChangeListener.onAddTask(0);
+                } else {
+                    Collections.reverse(taskItemList);
+                    taskItemChangeListener.onGetListTask(taskItemList);
+                    isFirstLoad = false;
+                }
             }
 
             @Override
@@ -90,8 +115,6 @@ public class TaskItemFragmentPresenter {
 
     public void addTaskItem(TaskItem taskItem) {
         if (taskItem.validateTaskName(taskItem.getName())) {
-            taskItemList.add(0, taskItem);
-            taskItemChangeListener.onAddTask(0);
             taskItemRef.push().setValue(taskItem);
             validModelListener.onValidModel();
             return;

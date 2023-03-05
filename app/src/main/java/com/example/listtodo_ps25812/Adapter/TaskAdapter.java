@@ -1,5 +1,6 @@
 package com.example.listtodo_ps25812.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.viewHolderTask
         holder.tvTaskName.setText(taskList.get(holder.getLayoutPosition()).getName());
         holder.cardView.setOnClickListener(v->openItemsFragmentListener
                 .openItemsFragment(taskList.get(holder.getLayoutPosition())));
+
     }
 
     @Override

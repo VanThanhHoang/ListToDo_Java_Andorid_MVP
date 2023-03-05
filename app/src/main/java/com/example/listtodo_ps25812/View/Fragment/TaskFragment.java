@@ -23,7 +23,6 @@ import com.example.listtodo_ps25812.Presenter.Listener.TaskChangeListener;
 import com.example.listtodo_ps25812.Presenter.TaskFragmentPresenter;
 import com.example.listtodo_ps25812.R;
 import com.example.listtodo_ps25812.Untilities.ItemTouchHelperCallback;
-import com.example.listtodo_ps25812.Untilities.NetworkChecker;
 import com.example.listtodo_ps25812.View.Dialog.ProcessDialog;
 import com.example.listtodo_ps25812.View.Dialog.TaskDialog.AddTaskDialog;
 import com.example.listtodo_ps25812.View.Dialog.TaskDialog.UpdateTaskDialog;
@@ -60,15 +59,18 @@ public class TaskFragment extends Fragment implements TaskChangeListener, SwipeI
         if (getContext() != null)
             layoutBinding.fabAddTask.setOnClickListener(v -> showDialogAddTask());
         showProcessDialog();
-        taskFragmentPresenter = new TaskFragmentPresenter( this, new NetworkChecker(this.getContext()));
+        taskFragmentPresenter = new TaskFragmentPresenter( this);
     }
 
     void initRv(List<Task> taskList) {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
         taskAdapter = new TaskAdapter(taskList, (OpenItemsFragmentListener) getContext());
         layoutBinding.rvTask.setLayoutManager(layoutManager);
         layoutBinding.rvTask.setAdapter(taskAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(this.getContext(), this));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(
+                new ItemTouchHelperCallback(this.getContext(),
+                        this));
         itemTouchHelper.attachToRecyclerView(layoutBinding.rvTask);
         layoutBinding.rvTask.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

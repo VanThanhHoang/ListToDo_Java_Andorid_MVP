@@ -4,6 +4,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
@@ -17,7 +18,7 @@ import com.example.listtodo_ps25812.Listener.OpenItemsFragmentListener;
 import com.example.listtodo_ps25812.Model.Task;
 import com.example.listtodo_ps25812.R;
 import com.example.listtodo_ps25812.Untilities.NetWorkChangeReceive;
-import com.example.listtodo_ps25812.View.Dialog.BottomSheetDialogMenu;
+import com.example.listtodo_ps25812.View.Dialog.OtherDialog.BottomSheetDialogMenu;
 import com.example.listtodo_ps25812.View.Fragment.TaskFragment;
 import com.example.listtodo_ps25812.View.Fragment.TaskItemFragment;
 import com.example.listtodo_ps25812.databinding.ActivityHomeBinding;
@@ -63,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements NetWorkStateChang
     public void handleNetWorkConnected() {
         if (layoutBinding.tvNetWorkState.isShown()) {
             layoutBinding.tvNetWorkState.setText("Đã quay lại trực tuyến");
-            layoutBinding.tvNetWorkState.setBackgroundColor(getResources().getColor(R.color.green));
+            layoutBinding.tvNetWorkState.setBackgroundColor(getResources().getColor(R.color.green,null));
             new Handler().postDelayed(() -> layoutBinding.tvNetWorkState.setVisibility(View.GONE), 2000);
         }
     }
@@ -77,7 +78,8 @@ public class HomeActivity extends AppCompatActivity implements NetWorkStateChang
     public void openItemsFragment(Task task) {
         TaskItemFragment taskItemFragment = new TaskItemFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("taskId",task.getKey());
+        bundle.putString("taskKey",task.getKey());
+        Log.d("123", "onBindViewHolder: "+task.getKey());
         taskItemFragment.setArguments(bundle);
         replaceFragment(taskItemFragment);
     }
